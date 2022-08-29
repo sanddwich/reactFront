@@ -21,6 +21,7 @@ class MainLayout extends React.Component<MainLayoutProps, MainLayoutState> {
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/second" element={<Second />} />
+            
             {/* <Route path="*" element={<Main />} /> */}
           </Routes>
         </MainBody>
