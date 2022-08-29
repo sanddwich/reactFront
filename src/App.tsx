@@ -7,6 +7,8 @@ import { RootState } from './Redux'
 import { ModalState, ToastState } from './Redux/interfaces/interfaces'
 import ToastComponent from './SharedComponents/ToastComponent/ToastComponent'
 import MobileMenu from './SharedComponents/MobileMenu/MobileMenu'
+import AdminLayout from './Layouts/AdminLayout/AdminLayout'
+import ErrorLayout from './Layouts/ErrorLayout/ErrorLayout'
 
 interface AppProps {
   toast: ToastState
@@ -28,8 +30,9 @@ const App = (props: AppProps) => {
       {props.toast.isActive && <ToastComponent />}
 
       <Routes>
+        <Route path="/auth" element={<AdminLayout />} />
         <Route path="/" element={<MainLayout />} />
-        <Route path="*" element={<MainLayout />} />
+        <Route path="*" element={<ErrorLayout />} />
       </Routes>
     </Container>
   )
