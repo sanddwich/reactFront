@@ -1,5 +1,6 @@
 import React from 'react'
 import { Container, Nav } from 'react-bootstrap'
+import { AiFillHome } from 'react-icons/ai'
 import { NavLink } from 'react-router-dom'
 import './AdminHeader.scss'
 
@@ -10,8 +11,13 @@ const AdminHeader = (props: AdminHeaderProps) => {
     <Container fluid className="AdminHeader">
       <Container className="AdminHeader__content">
         <Nav>
+          {/* <NavLink to={`/`}>
+            <Nav.Item>
+              <AiFillHome className="MainHeader__homeIcon" /> Главная
+            </Nav.Item>
+          </NavLink> */}
           <NavLink to={`/admin/`}>
-            <Nav.Item>Главная</Nav.Item>
+            <AiFillHome className="MainHeader__homeIcon" /> Главная
           </NavLink>
           <NavLink to={`/admin/users`}>
             <Nav.Item>Пользователи</Nav.Item>
