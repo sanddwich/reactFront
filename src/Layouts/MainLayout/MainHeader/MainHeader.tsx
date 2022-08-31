@@ -1,5 +1,7 @@
 import React from 'react'
-import { Container } from 'react-bootstrap'
+import { Container, Nav } from 'react-bootstrap'
+import { ArrowUpCircleFill } from 'react-bootstrap-icons'
+import { NavLink } from 'react-router-dom'
 import './MainHeader.scss'
 
 interface MainHeaderProps {}
@@ -7,12 +9,24 @@ interface MainHeaderProps {}
 interface MainHeaderState {}
 
 class MainHeader extends React.Component<MainHeaderProps, MainHeaderState> {
-  
 
   render() {
     return (
-      <Container fluid className="MainHeader p-0">
-        {/* <h1>MainHeader</h1>         */}
+      <Container fluid className="MainHeader">
+        <Container className="MainHeader__content">
+          
+          <Nav>
+            <NavLink to={`/`}>
+              <Nav.Item>Главная</Nav.Item>
+            </NavLink>
+            <NavLink to={`/second`}>
+              <Nav.Item>О нас</Nav.Item>
+            </NavLink>
+            <NavLink to={`/admin`}>
+              <Nav.Item>Административная панель</Nav.Item>
+            </NavLink>
+          </Nav>
+        </Container>
       </Container>
     )
   }
