@@ -10,7 +10,7 @@ const AuthCheck = (props: AuthCheckProps) => {
   const params: Readonly<Params<string>> = useParams()
   const navigate: NavigateFunction = useNavigate()
 
-  const auth = true
+  const auth = false
 
   if (!auth) return <Navigate to="/auth" state={{from: location}} />
 

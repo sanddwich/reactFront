@@ -10,6 +10,7 @@ import AdminMain from '../Pages/SecurePages/AdminMain/AdminMain'
 import Privileges from '../Pages/SecurePages/Privileges/Privileges'
 import Roles from '../Pages/SecurePages/Roles/Roles'
 import Users from '../Pages/SecurePages/Users/Users'
+import TestPage from '../Pages/TestPage/TestPage'
 import AuthCheck from '../Services/AuthCheck'
 
 interface AppRoutesProps {}
@@ -21,6 +22,7 @@ const AppRoutes = (props: AppRoutesProps) => {
         <Route index element={<Main />} />
         <Route path="second" element={<Second />} />
         <Route path="auth" element={<LoginPage />} />
+        <Route path="test" element={<TestPage />} />
         <Route path="*" element={<NotFound />} />
       </Route>
 
