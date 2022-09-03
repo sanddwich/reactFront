@@ -22,6 +22,9 @@ const MainHeader = (props: MainHeaderProps) => {
           <NavLink to={`/test`}>
             <Nav.Item>Тест</Nav.Item>
           </NavLink>
+          <NavLink to={`/hooks`}>
+            <Nav.Item>Хуки</Nav.Item>
+          </NavLink>
           <NavLink to={`/admin/`}>
             <Nav.Item>Административная панель</Nav.Item>
           </NavLink>

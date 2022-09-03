@@ -2,6 +2,7 @@ import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import AdminLayout from '../Layouts/AdminLayout/AdminLayout'
 import MainLayout from '../Layouts/MainLayout/MainLayout'
+import Hooks from '../Pages/Hooks/Hooks'
 import LoginPage from '../Pages/LoginPage/LoginPage'
 import Main from '../Pages/Main/Main'
 import NotFound from '../Pages/NotFound/NotFound'
@@ -23,6 +24,7 @@ const AppRoutes = (props: AppRoutesProps) => {
         <Route path="second" element={<Second />} />
         <Route path="auth" element={<LoginPage />} />
         <Route path="test" element={<TestPage />} />
+        <Route path="hooks" element={<Hooks />} />
         <Route path="*" element={<NotFound />} />
       </Route>
 
