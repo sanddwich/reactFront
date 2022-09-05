@@ -1,17 +1,16 @@
+import { Config } from "../../Config/Config"
 import { SET_FRONTAPP_AUTH, SET_FRONTAPP_LOADING, SET_FRONTAPP_MESSAGE } from "../constants/ActionTypes"
 import { FrontAppActionType } from "../interfaces/FrontAppActionType"
 import { FrontAppState } from "../interfaces/interfaces"
 
 const initialState: FrontAppState = {
-  auth: {
-    isAuth: false,
-    token: ""
-  },
+  auth: Config.defaultAuth,
   backendParams: {
-    AUTH_URL: "",
-    GET_PRIVILEGES_URL: "",
-    GET_ROLES_URL: "",
-    GET_USER_URL: ""
+    AUTH_URL: Config.backendURL + "api/auth/login",
+    CHECK_TOKEN_URL: Config.backendURL + "api/auth/check_token",
+    GET_PRIVILEGES_URL: Config.backendURL + "api/developer/privileges",
+    GET_ROLES_URL: Config.backendURL + "api/developer/roles",
+    GET_USER_URL: Config.backendURL + "api/developer/users"
   },
   loading: false,
   message: {
