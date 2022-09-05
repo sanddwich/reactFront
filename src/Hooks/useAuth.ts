@@ -37,6 +37,10 @@ export default function useAuth(): UseAuthReturnDataIface {
     axios({
       method: 'POST',
       url: backendParams.CHECK_TOKEN_URL,
+      // withCredentials: true,
+      headers: {
+        "Content-Type": "application/json",
+      },
       data: {
         token: localStorage.storage.auth.token,
       },
