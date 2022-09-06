@@ -9,6 +9,9 @@ import { setFrontAppAuth } from '../Redux/actions/frontAppAction'
 import { Config } from '../Config/Config'
 import LocalStorageReturnDataIface from '../Redux/interfaces/AdditionalInterfaces/LocalStorageReturnDataIface'
 import { AnyAction, Store } from 'redux'
+import AuthCheckTokenResponseIfase from '../Redux/interfaces/AdditionalInterfaces/ResponseDataIfase'
+import ResponseDataIfase from '../Redux/interfaces/AdditionalInterfaces/ResponseDataIfase'
+import FormatResponse from '../Functions/FormatResponse'
 
 const calculateAuth = (localStorage: LocalStorageReturnDataIface, reduxStore: Store<any, AnyAction>): AuthIface => {
   try {
@@ -32,29 +35,52 @@ export default function useAuth(): UseAuthReturnDataIface {
   const [auth, setAuth] = useState<AuthIface>(() => calculateAuth(localStorage, reduxStore))
 
   const checkAuth = async (): Promise<any> => {
+    const message: ResponseDataIfase = await checkAuthToken()
+
+    if (!!message.error) {
+      console.log(message.error)
+      auth.isAuth = false
+    } else {
+      if (!!message.data && !!message.data.tokenIsValid) {
+        auth.isAuth = message.data.tokenIsValid
+      }
+    }
+
+    updateAuth(auth)
+  }
+
+  const checkAuthToken = async (): Promise<any> => {
     const backendParams: BackendParamsIface = reduxStore.getState().frontApp.backendParams
 
-    axios({
+    const result: ResponseDataIfase = await axios({
       method: 'POST',
       url: backendParams.CHECK_TOKEN_URL,
-      // withCredentials: true,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       data: {
         token: localStorage.storage.auth.token,
       },
     })
       .then((response) => {
-        console.log(response)
+        if (response.status == 200) {
+          return FormatResponse(response.data, null)
+        } else {
+          return FormatResponse(null, 'Ошибка запроса. Cтатус: ' + response.status)
+        }
       })
       .catch((error) => {
-        console.log(error)
+        return FormatResponse(null, 'Ошибка запроса: ' + error)
       })
+
+    return result
   }
 
   const updateAuth = (auth: AuthIface) => {
-    setAuth(auth)
+    setAuth(prev => {
+      prev = {...auth}
+      return prev
+    })
     localStorage.updateAuth(auth)
     reduxStore.dispatch(setFrontAppAuth(auth))
   }
@@ -67,6 +93,6 @@ export default function useAuth(): UseAuthReturnDataIface {
     auth,
     updateAuth,
     checkAuth,
-    test
+    test,
   }
 }
