@@ -36,17 +36,18 @@ export default function useAuth(): UseAuthReturnDataIface {
 
   const checkAuth = async (): Promise<any> => {
     const message: ResponseDataIfase = await checkAuthToken()
+    const tmpAuth: AuthIface = auth
 
     if (!!message.error) {
       console.log(message.error)
-      auth.isAuth = false
+      tmpAuth.isAuth = false
     } else {
-      if (!!message.data && !!message.data.tokenIsValid) {
-        auth.isAuth = message.data.tokenIsValid
-      }
+      if (!!message.data) {
+        tmpAuth.isAuth = message.data.tokenIsValid
+      }      
     }
 
-    updateAuth(auth)
+    updateAuth(tmpAuth)
   }
 
   const checkAuthToken = async (): Promise<any> => {
@@ -59,7 +60,7 @@ export default function useAuth(): UseAuthReturnDataIface {
         'Content-Type': 'application/json',
       },
       data: {
-        token: localStorage.storage.auth.token,
+        token: auth.token,
       },
     })
       .then((response) => {
@@ -76,13 +77,15 @@ export default function useAuth(): UseAuthReturnDataIface {
     return result
   }
 
-  const updateAuth = (auth: AuthIface) => {
+  const updateAuth = (inputAuth: AuthIface) => {
     setAuth(prev => {
-      prev = {...auth}
+      prev = { ...inputAuth }
+      console.log(prev)
       return prev
     })
-    localStorage.updateAuth(auth)
-    reduxStore.dispatch(setFrontAppAuth(auth))
+
+    localStorage.updateAuth(inputAuth)
+    reduxStore.dispatch(setFrontAppAuth(inputAuth))
   }
 
   const test = () => {

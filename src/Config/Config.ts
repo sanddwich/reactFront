@@ -10,7 +10,7 @@ export const Config: ConfigInterface = {
   defaultAuth: {
     username: "",
     isAuth: false,
-    token: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicHJpdmlsZWdlcyI6WyJVU0VSIiwiUkVTVF9BUElfR0VUIl0sImlhdCI6MTY2MjQ3Mjg4NiwiZXhwIjoxNjYyNTE2MDg2fQ.VHnTnpdfBH2BCYX06Oby6GKOfD27TvsRfGWnT6Hdz98"
-    // token: ""
+    // token: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicHJpdmlsZWdlcyI6WyJVU0VSIiwiUkVTVF9BUElfR0VUIl0sImlhdCI6MTY2MjQ3Mjg4NiwiZXhwIjoxNjYyNTE2MDg2fQ.VHnTnpdfBH2BCYX06Oby6GKOfD27TvsRfGWnT6Hdz98",
+    token: ""
   },
 }

@@ -28,24 +28,16 @@ const Hooks = (props: HooksProps) => {
   }
   
   const SetAuth = () => {
-    const newAuth: AuthIface = {
-      username: "username",
-      isAuth: true,
-      token: "token"
-    }
-
-    // localStorage.updateAuth(newAuth)
-
-    store.dispatch(setFrontAppAuth(newAuth))
+    const token: string = "token"
+    // const token: string = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicHJpdmlsZWdlcyI6WyJVU0VSIiwiUkVTVF9BUElfR0VUIl0sImlhdCI6MTY2MjQ3Mjg4NiwiZXhwIjoxNjYyNTE2MDg2fQ.VHnTnpdfBH2BCYX06Oby6GKOfD27TvsRfGWnT6Hdz98"
     
-    console.log(store.getState().frontApp.auth)
   }
 
   return (
     <Container fluid className="Hooks">
       <h1>Hooks</h1>
 
-      <p>{`Auth: ${JSON.stringify(store.getState().frontApp.auth, null,)}`}</p>
+      <p>{`Auth: ${auth.auth.isAuth}`}</p>
 
       <button className="btn btn-primary" style={{marginRight: 5}} onClick={GetAuth}>GetAuth</button>
       <button className="btn btn-success" onClick={SetAuth}>SetAuth</button>
