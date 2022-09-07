@@ -26,6 +26,8 @@ export default function useAuth(): useAuthReturnIface {
         isAuth,
       }
     })
+
+    updateAuthAtLocalStorageAndReduxStore()
   }
 
   const updateAuthToken = (token: string) => {
