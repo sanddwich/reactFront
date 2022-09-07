@@ -19,6 +19,7 @@ export default function useAuth(): useAuthReturnIface {
 
   const [auth, setAuth] = useState<AuthIface>(localStorage.storage.auth)
 
+<<<<<<< HEAD
   const updateIsAuth = (isAuth: boolean) => {
     setAuth((prev) => {
       return {
@@ -26,6 +27,34 @@ export default function useAuth(): useAuthReturnIface {
         isAuth,
       }
     })
+=======
+    return localStorageAuth
+  } catch (e) {
+    return Config.defaultAuth
+  }
+}
+
+export default function useAuth(): UseAuthReturnDataIface {
+  let localStorage = useLocalStorage()
+  let reduxStore = useStore()
+
+  const [auth, setAuth] = useState<AuthIface>(() => calculateAuth(localStorage, reduxStore))
+
+  const checkAuth = async (): Promise<any> => {
+    const message: ResponseDataIfase = await checkAuthToken()
+    const tmpAuth: AuthIface = auth
+
+    if (!!message.error) {
+      console.log(message.error)
+      tmpAuth.isAuth = false
+    } else {
+      if (!!message.data) {
+        tmpAuth.isAuth = message.data.tokenIsValid
+      }      
+    }
+
+    updateAuth(tmpAuth)
+>>>>>>> e71bfc65f352f26af0d5f582c8d347fd425a8ace
   }
 
   const updateAuthToken = (token: string) => {
@@ -66,6 +95,26 @@ export default function useAuth(): useAuthReturnIface {
       .catch((error) => {
         console.log('Ошибка запроса: ' + error)
       })
+<<<<<<< HEAD
+=======
+
+    return result
+  }
+
+  const updateAuth = (inputAuth: AuthIface) => {
+    setAuth(prev => {
+      prev = { ...inputAuth }
+      console.log(prev)
+      return prev
+    })
+
+    localStorage.updateAuth(inputAuth)
+    reduxStore.dispatch(setFrontAppAuth(inputAuth))
+  }
+
+  const test = () => {
+    console.log(reduxStore.getState().frontApp.backendParams)
+>>>>>>> e71bfc65f352f26af0d5f582c8d347fd425a8ace
   }
 
   return {

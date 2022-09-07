@@ -23,12 +23,28 @@ const Hooks = (props: HooksProps) => {
   const store = useStore()
   const auth = useAuth()
 
+<<<<<<< HEAD
+=======
+  const GetAuth = () => {
+    auth.checkAuth()
+  }
+  
+  const SetAuth = () => {
+    const token: string = "token"
+    // const token: string = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicHJpdmlsZWdlcyI6WyJVU0VSIiwiUkVTVF9BUElfR0VUIl0sImlhdCI6MTY2MjQ3Mjg4NiwiZXhwIjoxNjYyNTE2MDg2fQ.VHnTnpdfBH2BCYX06Oby6GKOfD27TvsRfGWnT6Hdz98"
+    
+  }
+
+>>>>>>> e71bfc65f352f26af0d5f582c8d347fd425a8ace
   return (
     <Container fluid className="Hooks">
       <h1>Hooks</h1>
 
+<<<<<<< HEAD
       <p>{`Token: ${auth.auth.token.length > 50 ? auth.auth.token.substring(0, 50) + "..." : auth.auth.token}`}</p>
       <hr />
+=======
+>>>>>>> e71bfc65f352f26af0d5f582c8d347fd425a8ace
       <p>{`Auth: ${auth.auth.isAuth}`}</p>
 
       <button className="btn btn-primary" style={{ marginRight: 5 }} onClick={() => auth.updateAuthToken('token')}>
