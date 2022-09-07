@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import useLocalStorage from '../../Hooks/useLocalStorage'
 import { RootState } from '../../Redux'
 import AuthIface from '../../Redux/interfaces/AdditionalInterfaces/AuthIface'
-import {setFrontAppAuth, setFrontAppLoading, setFrontAppMessage} from '../../Redux/actions/frontAppAction'
+import { setFrontAppAuth, setFrontAppLoading, setFrontAppMessage } from '../../Redux/actions/frontAppAction'
 import './Hooks.scss'
 import MessageIface from '../../Redux/interfaces/AdditionalInterfaces/MessageIface'
 import { FrontAppState } from '../../Redux/interfaces/interfaces'
@@ -23,36 +23,38 @@ const Hooks = (props: HooksProps) => {
   const store = useStore()
   const auth = useAuth()
 
-  const GetAuth = () => {
-    auth.checkAuth()
-  }
-  
-  const SetAuth = () => {
-    const newAuth: AuthIface = {
-      username: "username",
-      isAuth: true,
-      token: "token"
-    }
-
-    // localStorage.updateAuth(newAuth)
-
-    store.dispatch(setFrontAppAuth(newAuth))
-    
-    console.log(store.getState().frontApp.auth)
-  }
-
   return (
     <Container fluid className="Hooks">
       <h1>Hooks</h1>
 
-      <p>{`Auth: ${JSON.stringify(store.getState().frontApp.auth, null,)}`}</p>
+      <p>{`Token: ${auth.auth.token.length > 50 ? auth.auth.token.substring(0, 50) + "..." : auth.auth.token}`}</p>
+      <hr />
+      <p>{`Auth: ${auth.auth.isAuth}`}</p>
 
-      <button className="btn btn-primary" style={{marginRight: 5}} onClick={GetAuth}>GetAuth</button>
-      <button className="btn btn-success" onClick={SetAuth}>SetAuth</button>
+      <button className="btn btn-primary" style={{ marginRight: 5 }} onClick={() => auth.updateAuthToken('token')}>
+        SetFalseTokenAuth
+      </button>
+
+      <button
+        className="btn btn-primary"
+        style={{ marginRight: 5 }}
+        onClick={() =>
+          auth.updateAuthToken(
+            'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicHJpdmlsZWdlcyI6WyJVU0VSIiwiUkVTVF9BUElfR0VUIl0sImlhdCI6MTY2MjU1NjE0OSwiZXhwIjoxNjYyNTk5MzQ5fQ.UPqoB8Q0JPzzemSpWnYchPDxFm21ilkO46psINkXE3g'
+          )
+        }
+      >
+        SetTrueTokenAuth
+      </button>
+
+      <button className="btn btn-success" onClick={() => {
+        auth.checkToken()
+      }}>
+        CheckToken
+      </button>
     </Container>
   )
 }
-
 
 const mapDispatchToProps = {
   // setFrontAppAuth,
