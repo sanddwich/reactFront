@@ -1,7 +1,6 @@
 import AuthIface from "./AuthIface";
-import StorageIface from "./StorageIface";
 
 export default interface LocalStorageReturnDataIface {
-  storage: StorageIface
+  auth: AuthIface
   updateAuth: (auth: AuthIface) => void
 }

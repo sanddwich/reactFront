@@ -27,11 +27,39 @@ const Hooks = (props: HooksProps) => {
     <Container fluid className="Hooks">
       <h1>Hooks</h1>
 
-      <p>{`Token: ${auth.auth.token.length > 50 ? auth.auth.token.substring(0, 50) + "..." : auth.auth.token}`}</p>
+      <h1>Hook</h1>
+      <p>{`Token: ${auth.auth.token.length > 50 ? auth.auth.token.substring(0, 50) + '...' : auth.auth.token}`}</p>
       <hr />
       <p>{`Auth: ${auth.auth.isAuth}`}</p>
 
-      <button className="btn btn-primary" style={{ marginRight: 5 }} onClick={() => auth.updateAuthToken('token')}>
+      <h1>Redux</h1>
+      <p>{`Token: ${
+        store.getState().frontApp.auth.token.length > 50
+          ? store.getState().frontApp.auth.token.substring(0, 50) + '...'
+          : store.getState().frontApp.auth.token
+      }`}</p>
+      <hr />
+      <p>{`Auth: ${store.getState().frontApp.auth.isAuth}`}</p>
+
+      <h1>LocalStorage</h1>
+      <p>{`Token: ${
+        localStorage.auth.token.length > 50
+          ? localStorage.auth.token.substring(0, 50) + '...'
+          : localStorage.auth.token
+      }`}</p>
+      <hr />
+      <p>{`Auth: ${localStorage.auth.isAuth}`}</p>
+
+      <button
+        className="btn btn-primary"
+        style={{ marginRight: 5 }}
+        onClick={() => {
+          auth.updateAuth({
+            ...auth.auth,
+            token: 'token',
+          })
+        }}
+      >
         SetFalseTokenAuth
       </button>
 
@@ -39,17 +67,22 @@ const Hooks = (props: HooksProps) => {
         className="btn btn-primary"
         style={{ marginRight: 5 }}
         onClick={() =>
-          auth.updateAuthToken(
-            'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicHJpdmlsZWdlcyI6WyJVU0VSIiwiUkVTVF9BUElfR0VUIl0sImlhdCI6MTY2MjU1NjE0OSwiZXhwIjoxNjYyNTk5MzQ5fQ.UPqoB8Q0JPzzemSpWnYchPDxFm21ilkO46psINkXE3g'
-          )
+          auth.updateAuth({
+            ...auth.auth,
+            token:
+              'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicHJpdmlsZWdlcyI6WyJVU0VSIiwiUkVTVF9BUElfR0VUIl0sImlhdCI6MTY2MjU1NjE0OSwiZXhwIjoxNjYyNTk5MzQ5fQ.UPqoB8Q0JPzzemSpWnYchPDxFm21ilkO46psINkXE3g',
+          })
         }
       >
         SetTrueTokenAuth
       </button>
 
-      <button className="btn btn-success" onClick={() => {
-        auth.checkToken()
-      }}>
+      <button
+        className="btn btn-success"
+        onClick={() => {
+          auth.checkToken()
+        }}
+      >
         CheckToken
       </button>
     </Container>

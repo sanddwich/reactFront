@@ -5,4 +5,5 @@ export default interface useAuthReturnIface {
   updateIsAuth: (isAuth: boolean) => void
   updateAuthToken: (token: string) => void
   checkToken: () => void
+  updateAuth: (inputAuth: AuthIface) => void
 }

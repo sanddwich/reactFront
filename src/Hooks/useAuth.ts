@@ -1,23 +1,23 @@
 import { useState } from 'react'
 import { useStore } from 'react-redux'
-import { AnyAction, Store } from 'redux'
-import { Config } from '../Config/Config'
 import AuthIface from '../Redux/interfaces/AdditionalInterfaces/AuthIface'
-import LocalStorageReturnDataIface from '../Redux/interfaces/AdditionalInterfaces/LocalStorageReturnDataIface'
-import StorageIface from '../Redux/interfaces/AdditionalInterfaces/StorageIface'
 import useLocalStorage from './useLocalStorage'
 import { setFrontAppAuth } from '../Redux/actions/frontAppAction'
 import BackendParamsIface from '../Redux/interfaces/AdditionalInterfaces/BackendParamsIface'
 import axios from 'axios'
 import ResponseDataIfase from '../Redux/interfaces/AdditionalInterfaces/ResponseDataIfase'
-import FormatResponse from '../Functions/FormatResponse'
 import useAuthReturnIface from '../Redux/interfaces/AdditionalInterfaces/useAuthReturnIface'
+import LocalStorageReturnDataIface from '../Redux/interfaces/AdditionalInterfaces/LocalStorageReturnDataIface'
+
+const calculateAuth = (localStorage: LocalStorageReturnDataIface): AuthIface => {
+  return localStorage.auth
+}
 
 export default function useAuth(): useAuthReturnIface {
   const localStorage = useLocalStorage()
   const reduxStore = useStore()
 
-  const [auth, setAuth] = useState<AuthIface>(localStorage.storage.auth)
+  const [auth, setAuth] = useState<AuthIface>(calculateAuth(localStorage))
 
   const updateIsAuth = (isAuth: boolean) => {
     setAuth((prev) => {
@@ -26,8 +26,17 @@ export default function useAuth(): useAuthReturnIface {
         isAuth,
       }
     })
+  }
 
-    updateAuthAtLocalStorageAndReduxStore()
+  const updateAuth = (inputAuth: AuthIface) => {
+    setAuth((prev) => {
+      return {
+        ...prev,
+        ...inputAuth,
+      }
+    })
+
+    updateAuthAtLocalStorageAndReduxStore(inputAuth)
   }
 
   const updateAuthToken = (token: string) => {
@@ -39,9 +48,17 @@ export default function useAuth(): useAuthReturnIface {
     })
   }
 
-  const updateAuthAtLocalStorageAndReduxStore = () => {
-    localStorage.updateAuth(auth)
-    reduxStore.dispatch(setFrontAppAuth(auth))
+  const updateAuthAtLocalStorageAndReduxStore = (inputAuth: AuthIface) => {
+    localStorage.updateAuth({
+      ...auth,
+      ...inputAuth,
+    })
+    reduxStore.dispatch(
+      setFrontAppAuth({
+        ...auth,
+        ...inputAuth,
+      })
+    )
   }
 
   const checkToken = () => {
@@ -60,7 +77,10 @@ export default function useAuth(): useAuthReturnIface {
     })
       .then((response) => {
         if (response.status == 200) {
-          if (!!response.data) updateIsAuth(response.data.tokenIsValid)
+          if (!!response.data) updateAuth({
+            ...auth,
+            isAuth: response.data.tokenIsValid
+          })
         } else {
           console.log('Ошибка запроса. Cтатус: ' + response.status)
         }
@@ -74,6 +94,7 @@ export default function useAuth(): useAuthReturnIface {
     auth: { ...auth },
     updateIsAuth,
     updateAuthToken,
-    checkToken
+    checkToken,
+    updateAuth,
   }
 }
