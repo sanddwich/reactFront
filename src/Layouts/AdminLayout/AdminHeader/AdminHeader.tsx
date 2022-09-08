@@ -1,12 +1,17 @@
 import React from 'react'
 import { Container, Nav } from 'react-bootstrap'
 import { AiFillHome } from 'react-icons/ai'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { Config } from '../../../Config/Config'
+import useAuth from '../../../Hooks/useAuth'
 import './AdminHeader.scss'
 
 interface AdminHeaderProps {}
 
 const AdminHeader = (props: AdminHeaderProps) => {
+  const navigate = useNavigate()
+  const auth = useAuth()
+
   return (
     <Container fluid className="AdminHeader">
       <Container className="AdminHeader__content">
@@ -28,6 +33,12 @@ const AdminHeader = (props: AdminHeaderProps) => {
           <NavLink to={`/admin/privileges`}>
             <Nav.Item>Привилегии</Nav.Item>
           </NavLink>
+          <a href="#" onClick={() => {
+            auth.updateAuth(Config.defaultAuth)
+            navigate("/")
+          }}>
+            <Nav.Item>Выход</Nav.Item>
+          </a>
         </Nav>
       </Container>
     </Container>

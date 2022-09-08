@@ -8,6 +8,8 @@ import axios from 'axios'
 import ResponseDataIfase from '../Redux/interfaces/AdditionalInterfaces/ResponseDataIfase'
 import useAuthReturnIface from '../Redux/interfaces/AdditionalInterfaces/useAuthReturnIface'
 import LocalStorageReturnDataIface from '../Redux/interfaces/AdditionalInterfaces/LocalStorageReturnDataIface'
+import FormDataInterface from '../Redux/interfaces/AdditionalInterfaces/FormDataInterface'
+import { LayoutTextWindowReverse } from 'react-bootstrap-icons'
 
 const calculateAuth = (localStorage: LocalStorageReturnDataIface): AuthIface => {
   return localStorage.auth
@@ -28,14 +30,54 @@ export default function useAuth(): useAuthReturnIface {
     })
   }
 
-  const updateAuth = (inputAuth: AuthIface) => {
+  const updateUsername = (username: string) => {
     setAuth((prev) => {
       return {
         ...prev,
-        ...inputAuth,
+        username,
       }
     })
-    
+  }
+
+  const authorize = async (userData: FormDataInterface): Promise<boolean> => {
+    const backendParams: BackendParamsIface = reduxStore.getState().frontApp.backendParams
+
+    let result: boolean = await axios({
+      method: 'POST',
+      url: backendParams.AUTH_URL,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: {
+        ...userData,
+      },
+    })
+      .then((response) => {
+        if (response.status == 200 && !!response.data) {
+          updateAuth({
+            ...response.data,
+            isAuth: true
+          })
+          
+          return true
+        } else {
+          console.log('Ошибка запроса. Cтатус: ' + response.status)
+          return false
+        }
+      })
+      .catch((error) => {
+        console.log('Ошибка запроса: ' + error)
+        return false
+      })
+
+    return result
+  }
+
+  const updateAuth = (inputAuth: AuthIface) => {
+    updateAuthToken(inputAuth.token)
+    updateUsername(inputAuth.username)
+    updateIsAuth(inputAuth.isAuth)
+
     reduxStore.dispatch(
       setFrontAppAuth({
         ...auth,
@@ -57,7 +99,6 @@ export default function useAuth(): useAuthReturnIface {
 
   const checkToken = () => {
     const backendParams: BackendParamsIface = reduxStore.getState().frontApp.backendParams
-    let result: ResponseDataIfase
 
     axios({
       method: 'POST',
@@ -71,11 +112,12 @@ export default function useAuth(): useAuthReturnIface {
     })
       .then((response) => {
         if (response.status == 200) {
-          if (!!response.data) updateAuth({
-            ...auth,
-            isAuth: response.data.tokenIsValid
-          })
-        } else {          
+          if (!!response.data)
+            updateAuth({
+              ...auth,
+              isAuth: response.data.tokenIsValid,
+            })
+        } else {
           console.log('Ошибка запроса. Cтатус: ' + response.status)
         }
       })
@@ -90,5 +132,7 @@ export default function useAuth(): useAuthReturnIface {
     updateAuthToken,
     checkToken,
     updateAuth,
+    authorize,
+    updateUsername
   }
 }

@@ -1,3 +1,24 @@
 .LoginPage {
-  
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+
+  justify-content: center;
+  align-items: center;
+
+  .LoginPage_formCont {
+    width: 40%;
+  }
+
+  .LoginPage__group {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+  .LoginPage__submit {
+    margin-top: 10px;
+    width: 100px;
+  }
 }

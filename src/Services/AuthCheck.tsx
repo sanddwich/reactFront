@@ -14,7 +14,7 @@ const AuthCheck = (props: AuthCheckProps) => {
   const auth = useAuth()
 
   useEffect(() => {
-    console.log("checkToken")
+    // auth.checkToken()
   }, [])
 
   if (!auth.auth.isAuth) return <Navigate to="/auth" state={{from: location}} />
