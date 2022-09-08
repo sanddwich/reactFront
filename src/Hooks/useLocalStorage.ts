@@ -5,7 +5,7 @@ import LocalStorageReturnDataIface from '../Redux/interfaces/AdditionalInterface
 import StorageIface from '../Redux/interfaces/AdditionalInterfaces/StorageIface'
 
 const calculateAuth = (): AuthIface => {
-  let auth: AuthIface = Config.defaultAuth
+  let outputAuth: AuthIface = Config.defaultAuth
 
   const authString: string | null = window.localStorage.getItem('auth')
 
@@ -15,35 +15,32 @@ const calculateAuth = (): AuthIface => {
       const token: string = JSON.parse(authString).token
       const isAuth: boolean = JSON.parse(authString).isAuth
 
-      auth = { isAuth, token, username }
+      outputAuth = { isAuth, token, username }
     }
   } catch (e) {
     console.warn('Ошибка: ' + e)
   }
 
-  return auth
+  return outputAuth
 }
 
 export default function useLocalStorage(): LocalStorageReturnDataIface {
   const [auth, setAuth] = useState<AuthIface>(() => calculateAuth())
 
   const updateAuth = (authData: AuthIface) => {
-    setAuth(prev => {
-      const updateData: AuthIface = {
+    window.localStorage.setItem('auth', JSON.stringify(authData))
+
+    setAuth((prev) => {
+      return {
         ...prev,
         ...authData,
       }
-
-      console.log(updateData)
-
-      window.localStorage.setItem('auth', JSON.stringify(updateData))
-
-      return updateData
     })
   }
 
   return {
     auth,
+    authToken: auth.token,
     updateAuth,
   }
 }

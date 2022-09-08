@@ -13,6 +13,10 @@ const AuthCheck = (props: AuthCheckProps) => {
   const navigate: NavigateFunction = useNavigate()
   const auth = useAuth()
 
+  useEffect(() => {
+    console.log("checkToken")
+  }, [])
+
   if (!auth.auth.isAuth) return <Navigate to="/auth" state={{from: location}} />
 
   return props.children

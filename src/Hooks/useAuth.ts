@@ -35,8 +35,15 @@ export default function useAuth(): useAuthReturnIface {
         ...inputAuth,
       }
     })
+    
+    reduxStore.dispatch(
+      setFrontAppAuth({
+        ...auth,
+        ...inputAuth,
+      })
+    )
 
-    updateAuthAtLocalStorageAndReduxStore(inputAuth)
+    localStorage.updateAuth(inputAuth)
   }
 
   const updateAuthToken = (token: string) => {
@@ -46,19 +53,6 @@ export default function useAuth(): useAuthReturnIface {
         token,
       }
     })
-  }
-
-  const updateAuthAtLocalStorageAndReduxStore = (inputAuth: AuthIface) => {
-    localStorage.updateAuth({
-      ...auth,
-      ...inputAuth,
-    })
-    reduxStore.dispatch(
-      setFrontAppAuth({
-        ...auth,
-        ...inputAuth,
-      })
-    )
   }
 
   const checkToken = () => {
@@ -81,7 +75,7 @@ export default function useAuth(): useAuthReturnIface {
             ...auth,
             isAuth: response.data.tokenIsValid
           })
-        } else {
+        } else {          
           console.log('Ошибка запроса. Cтатус: ' + response.status)
         }
       })
