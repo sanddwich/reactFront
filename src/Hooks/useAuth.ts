@@ -54,6 +54,8 @@ export default function useAuth(): useAuthReturnIface {
     })
       .then((response) => {
         if (response.status == 200 && !!response.data) {
+          console.log(response)
+
           updateAuth({
             ...response.data,
             isAuth: true
@@ -73,7 +75,21 @@ export default function useAuth(): useAuthReturnIface {
     return result
   }
 
+  const updateAuthTest = (inputAuth:AuthIface) => {
+    setAuth(prev => {
+      return {
+        ...prev,
+        username: inputAuth.username,
+        token: inputAuth.token,
+        isAuth: inputAuth.isAuth,
+      }
+    })
+    console.log(inputAuth)
+    console.log(auth)
+  }
+
   const updateAuth = (inputAuth: AuthIface) => {
+    // updateAuthTest(inputAuth)
     updateAuthToken(inputAuth.token)
     updateUsername(inputAuth.username)
     updateIsAuth(inputAuth.isAuth)

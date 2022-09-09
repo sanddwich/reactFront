@@ -1,3 +1,27 @@
 .Users {
-  
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+
+  .Users__loader {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+  }
+
+  .Users__user {
+    border: 2px #000e74 solid;
+    border-radius: 2px;
+    padding: 5px;
+
+    .Users__block {
+      padding: 5px;
+      padding-right: 20px;
+      font-size: 14px;
+    }
+  }
 }

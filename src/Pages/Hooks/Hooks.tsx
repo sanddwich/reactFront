@@ -27,8 +27,8 @@ const Hooks = (props: HooksProps) => {
     <Container fluid className="Hooks">
       <h1>Hooks</h1>
 
-      <h1>Hook useAuth</h1>
-      <p>{`Token: ${auth.auth.token.length > 50 ? auth.auth.token.substring(0, 50) + '...' : auth.auth.token}`}</p>
+      {/* <h1>Hook useAuth</h1>
+      <p>{`Token: ${auth.auth.token}`}</p>
       <hr />
       <p>{`Auth: ${auth.auth.isAuth}`}</p>
 
@@ -39,7 +39,7 @@ const Hooks = (props: HooksProps) => {
           : store.getState().frontApp.auth.token
       }`}</p>
       <hr />
-      <p>{`Auth: ${store.getState().frontApp.auth.isAuth}`}</p>
+      <p>{`Auth: ${store.getState().frontApp.auth.isAuth}`}</p> */}
 
       <button
         className="btn btn-primary"
@@ -70,8 +70,11 @@ const Hooks = (props: HooksProps) => {
 
       <button
         className="btn btn-success"
-        onClick={() => {
-          auth.checkToken()
+        onClick={async () => {
+          await auth.authorize({
+            username: "admin",
+            password: "Gjlvfcnthmt1!"
+          })
         }}
       >
         CheckToken

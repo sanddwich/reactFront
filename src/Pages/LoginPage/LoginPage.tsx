@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Button, Container, Form } from 'react-bootstrap'
 import { ArrowDownCircle } from 'react-bootstrap-icons'
 import { Location, Navigate, useLocation, useNavigate } from 'react-router-dom'
-import { useForm } from 'react-hook-form'
+// import { useForm } from 'react-hook-form'
 import './LoginPage.scss'
 import FormDataInterface from '../../Redux/interfaces/AdditionalInterfaces/FormDataInterface'
 import useAuth from '../../Hooks/useAuth'
@@ -18,17 +18,17 @@ const LoginPage = (prps: LoginPageProps) => {
 
   const minLength: number = 3
 
-  const {
-    register,
-    handleSubmit,
-    resetField,
-    formState: { errors },
-  } = useForm<FormDataInterface>({})
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   resetField,
+  //   formState: { errors },
+  // } = useForm<FormDataInterface>({})
 
-  const resetFields = (): void => {
-    resetField('username')
-    resetField('password')
-  }
+  // const resetFields = (): void => {
+  //   resetField('username')
+  //   resetField('password')
+  // }
 
   const buttonClickHandler = async (data: FormDataInterface): Promise<any> => {
     setLoader((prev) => !prev)
@@ -49,7 +49,7 @@ const LoginPage = (prps: LoginPageProps) => {
         <>
           <h1>LoginPage</h1>
           <div className="LoginPage_formCont">
-            <Form>
+            {/* <Form>
               <Form.Group className="LoginPage__group mb-3" controlId="formBasicEmail">
                 <Form.Label>Логин</Form.Label>
                 <Form.Control
@@ -92,7 +92,7 @@ const LoginPage = (prps: LoginPageProps) => {
               >
                 Войти
               </Button>
-            </Form>
+            </Form> */}
           </div>
         </>
       )}
