@@ -13,8 +13,8 @@ const Users = (props: UsersProps) => {
   const users = useUsers()
 
   useEffect(() => {
-    if (!loader) setLoader(true)
-  }, [users])
+    users.getUsers()
+  }, [])
 
   return (
     <Container fluid className="Users p-0">
