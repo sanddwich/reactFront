@@ -12,12 +12,17 @@ const Users = (props: UsersProps) => {
   const [loader, setLoader] = useState<boolean>(true)
   const users = useUsers()
 
+  const getUsers = async (): Promise<any> => {
+    await users.getUsers()
+    setLoader(false)
+  }
+
   useEffect(() => {
-    users.getUsers()
+    getUsers()
   }, [])
 
   return (
-    <Container fluid className="Users p-0">
+    <Container fluid className="Users">
       {loader ? (
         <Container fluid className="Users__loader d-lg-flex justify-content-center align-items-center">
           <LoaderCircle />
@@ -25,15 +30,21 @@ const Users = (props: UsersProps) => {
       ) : (
         <>
           <h1>Users</h1>
-          {users.users.map((user, index) => {
-            return (
-              <Container fluid key={index} className="Users__user">
-                <div className="Users__block">{user.username}</div>
-                <div className="Users__block">{user.email}</div>
-                <div className="Users__block">{user.active}</div>
+          {users.fetchUserDataError.isError ? (
+            <h1 className="text-danger">{users.fetchUserDataError.errorText}</h1>
+          ) : (
+            <Container fluid className="p-0">
+              {users.users.map((user, index) => {
+                return (
+                  <Container fluid key={index} className="Users__user d-flex flex-wrap">
+                    <div className="Users__block"><b>Логин: </b>{user.username}</div>
+                    <div className="Users__block"><b>Email: </b>{user.email}</div>
+                    <div className="Users__block"><b>Активность: </b>{user.active ? "Да" : "Нет"}</div>
+                  </Container>
+                )
+              })}
             </Container>
-            )
-          })}
+          )}
         </>
       )}
     </Container>

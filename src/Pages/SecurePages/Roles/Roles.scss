@@ -1,1 +1,30 @@
-.Roles {}
+.Roles {
+  padding: 20px;
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+
+  .Roles__loader {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+  }
+
+  .Roles__user {
+    border: 2px #000e74 solid;
+    border-radius: 2px;
+    padding: 5px;
+    margin-bottom: 5px;
+    background-color: #c1d5df;
+
+    .Roles__block {
+      padding: 5px;
+      padding-right: 20px;
+      font-size: 14px;
+    }
+  }
+}
